@@ -4,10 +4,10 @@ class Post < ActiveRecord::Base
     validates :summary, length:{maximum: 250}
     validates :category, inclusion:{in: %w(Fiction Non-fiction), in: [true, false] }
 
-    validate :title_does_not_contain
+    validate :title_is_not_click_baity
 
-     def title_does_not_contain
-        if !title.include?("Won't Believe" || "Secret" || "Top [number]" || "Guess")
+     def title_is_not_click_baity
+        if title && !title.match(/Won't Believe | Secret | Top [number] | Guess/)
             errors.add(:title, "not clickbait enough")
         end
      end 
